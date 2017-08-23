@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>insert cards</title>
+  </head>
+  <body>
+    <form class="" action="/" method="post">
+      <input type="text" name="cardName" value="" placeholder="Card Name">
+      <input type="text" name="cardMultiId" value="" placeholder="Multiverse ID">
+      <input type="text" name="_set" value="" placeholder="Set Name">
+      <select class="" name="colorId">
+        <option value="W">White</option>
+        <option value="U">Blue</option>
+        <option value="B">Black</option>
+        <option value="R">Red</option>
+        <option value="G">Green</option>
+
+      </select>
+      <button type="submit" name="button">Add to Database</button>
+    </form>
+    
+    <form class="" action="/:id" method="post">
+      <input type="text" name="cardName" value="" placeholder="Card Name">
+      <input type="text" name="cardMultiId" value="" placeholder="Multiverse ID">
+      <input type="text" name="_set" value="" placeholder="Set Name">
+      <select class="" name="colorId">
+        <option value="W">White</option>
+        <option value="U">Blue</option>
+        <option value="B">Black</option>
+        <option value="R">Red</option>
+        <option value="G">Green</option>
+
+      </select>
+      <button type="submit" name="button">update</button>
+    </form>
+
+    {{#myCards}}
+      <div>{{name}} <br> {{_set}} <br> {{colorId}} <br> {{multiverseid}}</div>
+    {{/myCards}}
+  </body>
+</html>
