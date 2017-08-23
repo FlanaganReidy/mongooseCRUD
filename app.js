@@ -7,6 +7,7 @@ mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/magic');
 const MongoClient = require('mongodb').MongoClient,
   assert = require('assert');
+const ObjectId = require('mongodb').ObjectID;
 
 let app = express();
 app.use(bodyParser.json());
@@ -39,9 +40,33 @@ app.post('/', function(req,res){
   })
 })
 
-app.post('/:id', function(req,res){
-  
+app.get('/:id', function(req,res){
+  let id = req.params.id;
+  Cards.findOne({_id: new ObjectId(id)})
+  .then(function(cards){res.render('individualCard', {myCards:cards})
+  }).catch(function (error, cards) {
+    console.log('error ' + JSON.stringify(error));
+    res.redirect('/')
+  })
 })
+
+app.post('/:id', function(req,res){
+  const upName = req.body.cardName;
+  const upMultiId = req.body.cardMultiId;
+  const upSetName = req.body._set;
+  const upColorId = req.body.colorId;
+  let id = req.params.id;
+  Cards.updateOne({_id: new ObjectId(id)}, {name: upName, multiverseid:upMultiId, _set:upSetName, colorId:upColorId})
+  .then(function () {
+    return Cards.find()
+    }).then(function(cards){
+    res.render('cardsdisplayindex', {myCards:cards})
+  }).catch(function (error, cards) {
+    console.log('error ' + JSON.stringify(error));
+    res.redirect('/')
+  })
+})
+
 // const recipe = new Recipe({name: name, source: "Grandma"});
 // recipe.save()
 //   .then(function () {
